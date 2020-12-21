@@ -1,3 +1,9 @@
+## 0.4.0-nullsafety.2
+### Added
+* Null Safety fixes
+* Introduces State Restoration
+* Fix some warnings and compilation errors
+
 ## 0.4.0-nullsafety.1
 ### Added
 * Null Safety Support

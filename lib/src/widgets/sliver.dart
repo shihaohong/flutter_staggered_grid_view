@@ -127,8 +127,8 @@ class SliverVariableSizeBoxAdaptorElement extends RenderObjectElement
         firstIndex = 0;
         lastIndex = 0;
       } else if (_didUnderflow) {
-        firstIndex = _childElements.firstKey()!;
-        lastIndex = _childElements.lastKey()! + 1;
+        firstIndex = _childElements.firstKey();
+        lastIndex = _childElements.lastKey() + 1;
       }
       for (int index = firstIndex; index <= lastIndex; ++index) {
         _currentlyUpdatingChildIndex = index;
@@ -268,8 +268,8 @@ class SliverVariableSizeBoxAdaptorElement extends RenderObjectElement
   @override
   void didFinishLayout() {
     assert(debugAssertChildListLocked());
-    final int firstIndex = _childElements.firstKey() ?? 0;
-    final int lastIndex = _childElements.lastKey() ?? 0;
+    final int firstIndex = _childElements.firstKey();
+    final int lastIndex = _childElements.lastKey();
     widget.delegate.didFinishLayout(firstIndex, lastIndex);
   }
 
@@ -560,22 +560,5 @@ class SliverStaggeredGrid extends SliverVariableSizeBoxAdaptorWidget {
   void updateRenderObject(
       BuildContext context, RenderSliverStaggeredGrid renderObject) {
     renderObject.gridDelegate = gridDelegate;
-  }
-
-  @override
-  double? estimateMaxScrollOffset(
-    SliverConstraints constraints,
-    int firstIndex,
-    int lastIndex,
-    double leadingScrollOffset,
-    double trailingScrollOffset,
-  ) {
-    return super.estimateMaxScrollOffset(
-      constraints,
-      firstIndex,
-      lastIndex,
-      leadingScrollOffset,
-      trailingScrollOffset,
-    );
   }
 }

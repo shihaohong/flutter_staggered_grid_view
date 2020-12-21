@@ -205,7 +205,7 @@ abstract class RenderSliverVariableSizeBoxAdaptor extends RenderSliver
 
   @override
   void remove(int index) {
-    final RenderBox child = this[index]!;
+    final RenderBox child = this[index];
     final childParentData =
         child.parentData! as SliverVariableSizeBoxAdaptorParentData;
     if (!childParentData._keptAlive) {
@@ -228,7 +228,7 @@ abstract class RenderSliverVariableSizeBoxAdaptor extends RenderSliver
     invokeLayoutCallback<SliverConstraints>((SliverConstraints constraints) {
       assert(constraints == this.constraints);
       if (_keepAliveBucket.containsKey(index)) {
-        final RenderBox child = _keepAliveBucket.remove(index)!;
+        final RenderBox child = _keepAliveBucket.remove(index);
         final childParentData =
             child.parentData! as SliverVariableSizeBoxAdaptorParentData;
         assert(childParentData._keptAlive);
@@ -243,7 +243,7 @@ abstract class RenderSliverVariableSizeBoxAdaptor extends RenderSliver
   }
 
   void _destroyOrCacheChild(int index) {
-    final RenderBox child = this[index]!;
+    final RenderBox child = this[index];
     final childParentData =
         child.parentData! as SliverVariableSizeBoxAdaptorParentData;
     if (childParentData.keepAlive) {
@@ -369,6 +369,9 @@ abstract class RenderSliverVariableSizeBoxAdaptor extends RenderSliver
       case Axis.vertical:
         return child.size.height;
     }
+    // Should never reach here.
+    assert(false);
+    return 0;
   }
 
   @override
@@ -451,14 +454,14 @@ abstract class RenderSliverVariableSizeBoxAdaptor extends RenderSliver
       final double mainAxisDelta = childMainAxisPosition(child);
       final double crossAxisDelta = childCrossAxisPosition(child);
       Offset childOffset = Offset(
-        originOffset.dx +
-            mainAxisUnit.dx * mainAxisDelta +
-            crossAxisUnit.dx * crossAxisDelta,
+        originOffset!.dx +
+            mainAxisUnit!.dx * mainAxisDelta +
+            crossAxisUnit!.dx * crossAxisDelta,
         originOffset.dy +
             mainAxisUnit.dy * mainAxisDelta +
             crossAxisUnit.dy * crossAxisDelta,
       );
-      if (addExtent) {
+      if (addExtent!) {
         childOffset += mainAxisUnit * paintExtentOf(child);
       }
       context.paintChild(child, childOffset);
@@ -487,7 +490,7 @@ abstract class RenderSliverVariableSizeBoxAdaptor extends RenderSliver
     if (_keepAliveBucket.isNotEmpty) {
       final List<int> indices = _keepAliveBucket.keys.toList()..sort();
       for (final index in indices) {
-        childList.add(_keepAliveBucket[index]!.toDiagnosticsNode(
+        childList.add(_keepAliveBucket[index].toDiagnosticsNode(
           name: 'child with index $index (kept alive offstage)',
           style: DiagnosticsTreeStyle.offstage,
         ));

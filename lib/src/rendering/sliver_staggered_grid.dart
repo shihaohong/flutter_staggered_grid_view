@@ -193,7 +193,6 @@ class SliverStaggeredGridGeometry {
 
   /// Returns a tight [BoxConstraints] that forces the child to have the
   /// required size.
-  @override
   BoxConstraints getBoxConstraints(SliverConstraints constraints) {
     return constraints.asBoxConstraints(
       minExtent: mainAxisExtent ?? 0.0,
@@ -309,7 +308,7 @@ class RenderSliverStaggeredGrid extends RenderSliverVariableSizeBoxAdaptor {
       viewportOffsets[0] = viewportOffset;
     } else {
       final smallestKey = viewportOffsets.lastKeyBefore(pageIndex + 1);
-      viewportOffset = viewportOffsets[smallestKey!];
+      viewportOffset = viewportOffsets[smallestKey];
     }
 
     // A staggered grid always have to layout the child from the zero-index based one to the last visible.
@@ -339,7 +338,7 @@ class RenderSliverStaggeredGrid extends RenderSliverVariableSizeBoxAdaptor {
       }
 
       if (!visible &&
-          targetEndScrollOffset >= geometry.scrollOffset &&
+          targetEndScrollOffset >= geometry!.scrollOffset &&
           scrollOffset <= geometry.trailingScrollOffset) {
         visible = true;
         leadingScrollOffset = geometry.scrollOffset;
@@ -348,13 +347,13 @@ class RenderSliverStaggeredGrid extends RenderSliverVariableSizeBoxAdaptor {
 
       if (visible && hasTrailingScrollOffset) {
         child =
-            addAndLayoutChild(index, geometry.getBoxConstraints(constraints));
+            addAndLayoutChild(index, geometry!.getBoxConstraints(constraints));
       }
 
       if (child != null) {
         final childParentData =
             child.parentData! as SliverVariableSizeBoxAdaptorParentData;
-        childParentData.layoutOffset = geometry.scrollOffset;
+        childParentData.layoutOffset = geometry!.scrollOffset;
         childParentData.crossAxisOffset = geometry.crossAxisOffset;
         assert(childParentData.index == index);
       }
@@ -363,7 +362,7 @@ class RenderSliverStaggeredGrid extends RenderSliverVariableSizeBoxAdaptor {
         visibleIndices.add(index);
       }
 
-      if (geometry.trailingScrollOffset >=
+      if (geometry!.trailingScrollOffset >=
           viewportOffset!.trailingScrollOffset) {
         final nextPageIndex = viewportOffset.pageIndex + 1;
         final nextViewportOffset = _ViewportOffsets(mainAxisOffsets,
@@ -476,7 +475,7 @@ class RenderSliverStaggeredGrid extends RenderSliverVariableSizeBoxAdaptor {
   static _Block _findFirstAvailableBlockWithCrossAxisCount(
       int crossAxisCount, List<double> offsets) {
     return _findFirstAvailableBlockWithCrossAxisCountAndOffsets(
-        crossAxisCount, List.from(offsets));
+        crossAxisCount, offsets);
   }
 
   /// Finds the first available block with at least the specified [crossAxisCount].

@@ -40,14 +40,14 @@ class MyScreen extends StatelessWidget {
 }
 
 class GridTest extends StatelessWidget {
-  GridTest(this.count, this.value);
+  const GridTest(this.count, this.value);
   final int count;
   final int value;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         crossAxisSpacing: 2,
         mainAxisSpacing: 2,
@@ -105,6 +105,7 @@ class SimpleBloc implements Disposable {
   final Stream<int> counter;
   late int _counter;
 
+  @override
   void dispose() {
     _counterController.close();
   }
@@ -129,7 +130,7 @@ class BlocProvider<T extends Disposable> extends StatefulWidget {
   _BlocProviderState<T> createState() => _BlocProviderState<T>();
 
   static T of<T extends Disposable>(BuildContext context) {
-    final provider = context.findAncestorWidgetOfExactType<BlocProvider<T>>()!;
+    final provider = context.findAncestorWidgetOfExactType<BlocProvider<T>>();
     return provider.bloc;
   }
 }
